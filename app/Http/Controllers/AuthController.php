@@ -43,12 +43,19 @@ class AuthController extends Controller
     {
         $validated = request()->validate(
             [
-                'name' => 'required|min:3|max:40',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|confirmed|min:8'
+                'email' => 'required|email',
+                'password' => 'required|min:8'
             ]
         );
 
-        return redirect()->route('dashboard')->with('success', 'Account created successfully!');
+        if (auth()->attempt($validated)) {
+            request()->session()->regenerate();
+
+            return redirect()->route('dashboard')->with('success', 'Logged successfully!');
+        }
+
+        return redirect()->route('login')->withErrors([
+            'email' => 'No matching user found with the provided email and password'
+        ]);
     }
 }
