@@ -34,4 +34,9 @@ class UserController extends Controller
     public function update(User $user)
     {
     }
+
+    public function profile()
+    {
+        return $this->show(auth()->user());
+    }
 }
