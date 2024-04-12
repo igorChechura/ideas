@@ -33,6 +33,17 @@ class UserController extends Controller
      */
     public function update(User $user)
     {
+        $validated = request()->validate(
+            [
+                'name' => 'required|min:3|max:40',
+                'bio' => 'nullable|min:1|max:255',
+                'image' => 'image'
+            ]
+        );
+
+        $user->update($validated);
+
+        return redirect()->route('profile');
     }
 
     public function profile()
