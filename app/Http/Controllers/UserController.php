@@ -25,7 +25,7 @@ class UserController extends Controller
         $editing = true;
         $ideas = $user->ideas()->paginate(5);
 
-        return view('users.show', compact('user', 'editing', 'ideas'));
+        return view('users.edit', compact('user', 'editing', 'ideas'));
     }
 
     /**

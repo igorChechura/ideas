@@ -5,28 +5,34 @@
                 <img style="width:150px" class="me-3 avatar-sm rounded-circle"
                     src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt="Mario Avatar">
                 <div>
-                    <h3 class="card-title mb-0"><a href="#"> {{ $user->name }}
-                        </a></h3>
-                    <span class="fs-6 text-muted">{{ $user->email }}</span>
+                    <input name="name" value="{{ $user->name }}" type="text" class="form-control">
+                    @error('name')
+                        <span class="text-danger fs-6">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <div>
                 @auth()
                     @if (Auth::id() === $user->id)
-                        <a href="{{ route('users.edit', $user->id) }}">Edit</a>
+                        <a href="{{ route('users.show', $user->id) }}">View</a>
                     @endif
                 @endauth
             </div>
         </div>
+        <div class="mt-4">
+            <label for="">Profile Picture</label>
+            <input name="image" class="form-control" type="file">
+        </div>
         <div class="px-2 mt-4">
             <h5 class="fs-5"> Bio : </h5>
+            <div class="mb-3">
+                <textarea name="bio" class="form-control" id="bio" rows="3"></textarea>
+                @error('bio')
+                    <span class="d-block fs-6 text-danger mt-2">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <p class="fs-6 fw-light">
-                This book is a treatise on the theory of ethics, very popular during the
-                Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes
-                from a line in section 1.10.32.
-            </p>
-
+            <button class="btn btn-dark btn-sm mb-3">Save</button>
             <div class="d-flex justify-content-start">
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
                     </span> 0 Followers </a>
